@@ -1,16 +1,8 @@
 from web3 import Web3
 
 from src.constants import *
-from src.utils.DexUtils import Dex
-
-def get_token0_token1_address(a, b):
-    if a < b:
-        token0 = a
-        token1 = b
-    else:
-        token0 = b
-        token1 = a
-    return token0, token1
+from src.utils.dex_helper import Dex
+from src.utils import *
 
 def getToken0Price(pair, router, amount):
     token0_reserve, token1_reserve = pair.functions.getReserves().call()[:2]

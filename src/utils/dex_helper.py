@@ -22,5 +22,5 @@ class Dex():
 
     def getPair(self, token0, token1):
         pair_address = self.factory.functions.getPair(token0, token1).call()
-        return self._getContract(pair_address, PAIR_ABI_PATH)
+        return pair_address, self._getContract(pair_address, PAIR_ABI_PATH)
         
