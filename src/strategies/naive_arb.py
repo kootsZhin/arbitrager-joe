@@ -1,5 +1,6 @@
 import logging
 from time import sleep
+from src.utils.logger import *
 
 logger = logging.getLogger("root")
 
@@ -32,6 +33,11 @@ class NaiveArb:
         pnl = exchange2_token0_out/self.token0_size - 1
         logger.info(f"{(exchange2_token0_out-self.token0_size) / 10 ** self.token0[2]} {self.token0[0]} ({round(pnl*100, 5)}%)")
 
+        if pnl > 0:
+            ping_telegram(f"{trade_1} @ {self.exchange1.name}")
+            ping_telegram(f"{trade_2} @ {self.exchange2.name}")
+            ping_telegram(f"{(exchange2_token0_out-self.token0_size) / 10 ** self.token0[2]} {self.token0[0]} ({round(pnl*100, 5)}%)")
+
 
     def buy_token1_exchange2(self, exchange1_reserve, exchange2_reserve):
 
@@ -48,6 +54,11 @@ class NaiveArb:
 
         pnl = exchange1_token0_out/self.token0_size - 1
         logger.info(f"{(exchange1_token0_out-self.token0_size) / 10 ** self.token0[2]} {self.token0[0]} ({round(pnl*100, 5)}%)")
+
+        if pnl > 0:
+            ping_telegram(f"{trade_1} @ {self.exchange2.name}")
+            ping_telegram(f"{trade_2} @ {self.exchange1.name}")
+            ping_telegram(f"{(exchange1_token0_out-self.token0_size) / 10 ** self.token0[2]} {self.token0[0]} ({round(pnl*100, 5)}%)")
 
 
     def run(self):

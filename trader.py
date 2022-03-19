@@ -27,6 +27,7 @@ def setup_dexes(w3):
 
 def main(token0, token1):
     logger.info("Trader starting...")
+    ping_telegram("Trader starting...")
 
     w3 = setup_provider()
 
