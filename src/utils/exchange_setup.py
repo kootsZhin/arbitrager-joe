@@ -4,9 +4,10 @@ FACTORY_ABI_PATH = "./src/abi/IUniswapV2Factory.json"
 ROUTER_ABI_PATH = "./src/abi/IUniswapV2Router02.json"
 PAIR_ABI_PATH = "./src/abi/IUniswapV2Pair.json"
 
-class Dex():
-    def __init__(self, web3_provider, factory_address, router_address):
+class Exchange():
+    def __init__(self, web3_provider, name, factory_address, router_address):
         self.w3 = web3_provider
+        self.name = name
         self.factory_address = factory_address
         self.router_address = router_address
         
@@ -22,5 +23,5 @@ class Dex():
 
     def getPair(self, token0, token1):
         pair_address = self.factory.functions.getPair(token0, token1).call()
-        return pair_address, self._getContract(pair_address, PAIR_ABI_PATH)
+        return (pair_address, self._getContract(pair_address, PAIR_ABI_PATH))
         
