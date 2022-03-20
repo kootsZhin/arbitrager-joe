@@ -68,5 +68,3 @@ class NaiveArb:
 
             self.buy_token1_exchange1(exchange1_reserve, exchange2_reserve)
             self.buy_token1_exchange2(exchange1_reserve, exchange2_reserve)
-
-            sleep(5)
