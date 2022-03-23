@@ -13,30 +13,30 @@ def main():
 
     token0, token1 = get_token0_token1_address(AVALANCHE_JOE_ADDRESS, AVALANCHE_USDT_ADDRESS)
 
-    Joe = Dex(
+    Exchange0 = Dex(
         web3_provider=w3,
         factory_address=JOE_FACTORY_ADDRESS,
         router_address=JOE_ROUTER_ADDRESS
     )
-    Joe_pair = Joe.getPair(token0, token1)
+    Exchange0_pair = Exchange0.getPair(token0, token1)
     
-    Pangolin = Dex(
+    Exchange1 = Dex(
         web3_provider=w3,
         factory_address=PANGOLIN_FACTORY_ADDRESS,
         router_address=PANGOLIN_ROUTER_ADDRESS
     )
-    Pangolin_pair = Pangolin.getPair(token0, token1)
+    Exchange1_pair = Exchange1.getPair(token0, token1)
 
     amount = 10**18
 
     # TODO: this is wrong, both are amount out
-    Joe_price = getToken0Price(Joe_pair, Joe.router, amount)
-    Pangolin_price = getToken0Price(Pangolin_pair, Pangolin.router, amount)
+    Exchange0_price = getToken0Price(Exchange0_pair, Exchange0.router, amount)
+    Exchange1_price = getToken0Price(Exchange1_pair, Exchange1.router, amount)
 
-    bps = Joe_price/Pangolin_price - 1
+    bps = Exchange0_price/Exchange1_price - 1
 
-    print(f"Joe: {Joe_price}")
-    print(f"Pangolin: {Pangolin_price}")
+    print(f"Exchange0: {Exchange0_price}")
+    print(f"Exchange1: {Exchange1_price}")
     print(f"bps: {bps}")
 
 if __name__ == "__main__":
