@@ -30,6 +30,7 @@ contract Ape is Ownable {
         );
         pair0.swap(amount0Out, amount1Out, address(this), data);
         require(token0Start < token0.balanceOf(address(this)), "GG");
+        token0.transfer(msg.sender, token0.balanceOf(address(this)));
     }
 
     function uniswapV2Call(

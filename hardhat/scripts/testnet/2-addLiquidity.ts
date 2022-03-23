@@ -1,5 +1,8 @@
-// Uniswap pair is created: 0x3bb5970B2AD7324d6dD95FEb9964f6d5FA4b1332
-// Sushiswap pair is created: 0x9AdB680204104AE59Bfda750527d30406383Ad14
+// Uniswap factory is connected: true
+// Sushiswap factory is connected: true
+// Uniswap pair is created: 0x4862AC55395067cF560087d08aF35082Bf4EecD5
+// Sushiswap pair is created: 0xd7200a23311e4107740247708dD6B384F131B8f0
+// Succefully added liquidity to the exhcanges!
 
 import { expect } from "chai";
 import { ethers } from "hardhat";
@@ -12,8 +15,8 @@ const SUSHISWAP_RINKEBY_FACTORY = "0xc35DADB65012eC5796536bD9864eD8773aBc74C4";
 const UNISWAP_RINKEBY_ROUTER = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
 const SUSHISWAP_RINKEBY_ROUTER = "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506";
 
-const TOKEN0_ADDRESS = "0xFD1bEF9A7fc9a7E2B785697CD5E6eaaE0e7D92Ba";
-const TOKEN1_ADDRESS = "0x8ADDF7b9cBCc7bAD7a62DB2d8eb1616BAB492347";
+const TOKEN0_ADDRESS = "0x08671a22962e961190Eb2dee3571c78e09d167bd";
+const TOKEN1_ADDRESS = "0x03a8FcE0A63AAc36bD37c8be9964293dAAd2aA80";
 
 async function main() {
     const [deployer] = await ethers.getSigners();
