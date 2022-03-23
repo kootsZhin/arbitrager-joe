@@ -49,4 +49,53 @@ python trader.py
 
 ## TODOS
 
+## Blueprint
+```bash
+.
+├── LICENSE
+├── Pipfile
+├── Pipfile.lock
+├── README.md
+├── hardhat
+│   ├── README.md
+│   ├── contracts
+│   │   ├── Ape.sol
+│   │   └── testnet
+│   │       ├── UniswapV2Factory.sol
+│   │       ├── token0.sol
+│   │       └── token1.sol
+│   ├── hardhat.config.ts
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── scripts
+│   │   └── testnet
+│   │       ├── 1-deployTokens.ts
+│   │       ├── 2-addLiquidity.ts
+│   │       └── 3-deployExecutor.ts
+│   ├── test
+│   │   └── index.ts
+│   ├── tsconfig.json
+│   └── yarn.lock
+├── src
+│   ├── abi
+│   │   ├── Ape.json
+│   │   ├── ERC20.json
+│   │   ├── IUniswapV2Factory.json
+│   │   ├── IUniswapV2Pair.json
+│   │   └── IUniswapV2Router02.json
+│   ├── constants.py
+│   ├── strategies
+│   │   └── naive_arb.py
+│   └── utils
+│       ├── exchange_setup.py
+│       └── logger.py
+├── test.py
+└── trader.py
+
+10 directories, 29 files
+```
+
 ## Resoruces
+- [On Arbitrage Bot using Flash Swaps](https://docs.google.com/document/d/13sfGbXdJl9gLHDQ-myG3XZgEQUHLQJIEon2qhE9fCvA/edit#heading=h.j3j7vyfbxjer) from @cryptofish
+- [Uniswap's documentation](https://docs.uniswap.org/protocol/V2/guides/smart-contract-integration/using-flash-swaps) on flashswap
+- A very clear illustration on the usage of swap from [flashswap/uniswap-flash-trade](https://github.com/flashswap/uniswap-flash-trade)
