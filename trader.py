@@ -25,8 +25,8 @@ def setup_tokens(token0, token1):
     return token0, token1
 
 def setup_dexes(w3):
-    Exchange0 = Exchange(web3_provider=w3, name="Exchange0", factory_address=RINKEBY_UNISWAP_FACTORY_ADDRESS, router_address=RINKEBY_UNISWAP_ROUTER_ADDRESS)
-    Exchange1 = Exchange(web3_provider=w3, name="Exchange1", factory_address=RINKEBY_SUSHISWAP_FACTORY_ADDRESS, router_address=RINKEBY_SUSHISWAP_ROUTER_ADDRESS)
+    Exchange0 = Exchange(web3_provider=w3, name="Uniswap", factory_address=RINKEBY_UNISWAP_FACTORY_ADDRESS, router_address=RINKEBY_UNISWAP_ROUTER_ADDRESS)
+    Exchange1 = Exchange(web3_provider=w3, name="SUSHISWAP", factory_address=RINKEBY_SUSHISWAP_FACTORY_ADDRESS, router_address=RINKEBY_SUSHISWAP_ROUTER_ADDRESS)
     return Exchange0, Exchange1
 
 def main(token0, token1):
