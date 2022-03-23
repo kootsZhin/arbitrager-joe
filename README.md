@@ -48,6 +48,12 @@ python trader.py
 - Logging for all arbitrage trades on concole and telegram
 
 ## TODOS
+- hardhat + python -> foundry + Rust/Go
+- Pairs scanning for arbitrage opportunities
+- Memepool monitoring for darkforest plays
+- Develop more sophisticated trading strategies
+- Optimizing gas usage for Ape.sol
+- Unit tests
 
 ## Blueprint
 ```bash
