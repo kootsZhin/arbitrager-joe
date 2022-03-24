@@ -54,6 +54,7 @@ python trader.py
 - Sizing function for trade size
 - Take gas cost into consideration
 - Gas auction optimization function (not urgent on avax)
+- Change price monitor to listen to block instead
 - Develop more sophisticated trading strategies (e.g. triangular arb)
 - Optimizing gas usage for Ape.sol
 - Unit tests
