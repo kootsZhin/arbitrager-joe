@@ -51,7 +51,10 @@ python trader.py
 - hardhat + python -> foundry + Rust/Go
 - Pairs scanning for arbitrage opportunities
 - Memepool monitoring for darkforest plays
-- Develop more sophisticated trading strategies
+- Sizing function for trade size
+- Take gas cost into consideration
+- Gas auction optimization function (not urgent on avax)
+- Develop more sophisticated trading strategies (e.g. triangular arb)
 - Optimizing gas usage for Ape.sol
 - Unit tests
 
