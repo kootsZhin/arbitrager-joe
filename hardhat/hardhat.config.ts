@@ -26,13 +26,28 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: "0.8.4",
+        version: "0.8.4", settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        }
       },
       {
-        version: "0.5.16",
+        version: "0.5.16", settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        }
       },
       {
-        version: "0.6.6"
+        version: "0.6.6", settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        }
       }
     ]
   },
@@ -45,7 +60,7 @@ const config: HardhatUserConfig = {
     },
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
+    enabled: process.env.REPORT_GAS === "true",
     currency: "USD",
   },
   etherscan: {
