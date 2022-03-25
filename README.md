@@ -48,61 +48,64 @@ python trader.py
 - Logging for all arbitrage trades on concole and telegram
 
 ## TODOS
-- hardhat + python -> foundry + Rust/Go
-- Pairs scanning for arbitrage opportunities
-- Memepool monitoring for darkforest plays
-- Sizing function for trade size
-- Take gas cost into consideration
-- Gas auction optimization function (not urgent on avax)
-- Change price monitor to listen to block instead
-- Develop more sophisticated trading strategies (e.g. triangular arb)
-- Optimizing gas usage for Ape.sol
-- Unit tests
+- [ ] hardhat + python -> foundry + Rust/Go
+- [ ] Pairs scanning for arbitrage opportunities
+- [ ] Memepool monitoring for darkforest plays
+- [ ] Sizing function for trade size
+- [ ] Take gas cost into consideration
+- [ ] Gas auction optimization function (not urgent on avax)
+- [ ] Change price monitor to listen to block instead
+- [ ] Develop more sophisticated trading strategies (e.g. triangular arb)
+- [ ] Optimizing gas usage for Ape.sol
+- [x] Unit tests
 
 ## Blueprint
 ```bash
+.
 .
 ├── LICENSE
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
 ├── hardhat
-│   ├── README.md
-│   ├── contracts
-│   │   ├── Ape.sol
-│   │   └── testnet
-│   │       ├── UniswapV2Factory.sol
-│   │       ├── token0.sol
-│   │       └── token1.sol
-│   ├── hardhat.config.ts
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── scripts
-│   │   └── testnet
-│   │       ├── 1-deployTokens.ts
-│   │       ├── 2-addLiquidity.ts
-│   │       └── 3-deployExecutor.ts
-│   ├── test
-│   │   └── index.ts
-│   ├── tsconfig.json
-│   └── yarn.lock
+│   ├── README.md
+│   ├── contracts
+│   │   ├── Ape.sol
+│   │   ├── mock
+│   │   │   ├── UniswapV2Factory.sol
+│   │   │   ├── UniswapV2Router02.sol
+│   │   │   └── WETH9.sol
+│   │   └── testnet
+│   │       ├── IUniswapV2Factory.sol
+│   │       ├── token0.sol
+│   │       └── token1.sol
+│   ├── hardhat.config.ts
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── scripts
+│   │   └── testnet
+│   │       ├── 1-deployTokens.ts
+│   │       ├── 2-addLiquidity.ts
+│   │       └── 3-deployExecutor.ts
+│   ├── test
+│   │   └── Ape.test.ts
+│   ├── tsconfig.json
+│   └── yarn.lock
 ├── src
-│   ├── abi
-│   │   ├── Ape.json
-│   │   ├── ERC20.json
-│   │   ├── IUniswapV2Factory.json
-│   │   ├── IUniswapV2Pair.json
-│   │   └── IUniswapV2Router02.json
-│   ├── constants.py
-│   ├── strategies
-│   │   └── naive_arb.py
-│   └── utils
-│       ├── exchange_setup.py
-│       └── logger.py
+│   ├── abi
+│   │   ├── Ape.json
+│   │   ├── ERC20.json
+│   │   ├── IUniswapV2Factory.json
+│   │   ├── IUniswapV2Pair.json
+│   │   └── IUniswapV2Router02.json
+│   ├── constants.py
+│   ├── strategies
+│   │   └── naive_arb.py
+│   └── utils
+│       ├── exchange_setup.py
+│       └── logger.py
 ├── test.py
 └── trader.py
-
-10 directories, 29 files
 ```
 
 ## Resoruces
