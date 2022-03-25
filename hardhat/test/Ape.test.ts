@@ -66,8 +66,8 @@ describe("Ape", function () {
         this.pair0 = await this.Pair.attach(
             await this.factory0.getPair(this.token0.address, this.token1.address)
         );
-        expect(await this.token0.balanceOf(this.pair0.address)).to.equal(HIGH_POS);
-        expect(await this.token1.balanceOf(this.pair0.address)).to.equal(LOW_POS);
+        expect(await this.token0.balanceOf(this.pair0.address)).to.eq(HIGH_POS);
+        expect(await this.token1.balanceOf(this.pair0.address)).to.eq(LOW_POS);
 
         await this.router1.connect(lp).addLiquidity(
             this.token0.address,
@@ -82,16 +82,108 @@ describe("Ape", function () {
         this.pair1 = await this.Pair.attach(
             await this.factory1.getPair(this.token0.address, this.token1.address)
         );
-        expect(await this.token0.balanceOf(this.pair1.address)).to.equal(LOW_POS);
-        expect(await this.token1.balanceOf(this.pair1.address)).to.equal(HIGH_POS);
+        expect(await this.token0.balanceOf(this.pair1.address)).to.eq(LOW_POS);
+        expect(await this.token1.balanceOf(this.pair1.address)).to.eq(HIGH_POS);
 
-        expect(await this.token0.balanceOf(lp.address)).to.equal(ethers.constants.Zero);
-        expect(await this.token1.balanceOf(lp.address)).to.equal(ethers.constants.Zero);
+        expect(await this.token0.balanceOf(lp.address)).to.eq(ethers.constants.Zero);
+        expect(await this.token1.balanceOf(lp.address)).to.eq(ethers.constants.Zero);
 
         this.ape = await this.Ape.deploy();
     })
 
-    it("dummy", async function () {
+    it("should be run with profit and without error", async function () {
+        await this.ape.connect(deployer).ape(
+            this.pair1.address,
+            this.pair0.address,
+            this.router1.address,
+            this.router0.address,
+            this.token0.address,
+            this.token1.address,
+            ethers.utils.parseEther("1")
+        );
+        expect(await this.token0.balanceOf(deployer.address)).to.be.gt('0');
+        expect(await this.token1.balanceOf(deployer.address)).to.be.eq('0');
 
+        expect(await this.token0.balanceOf(this.pair0.address)).to.lt(HIGH_POS);
+        expect(await this.token1.balanceOf(this.pair0.address)).to.gt(LOW_POS);
+        expect(await this.token0.balanceOf(this.pair1.address)).to.gt(LOW_POS);
+        expect(await this.token1.balanceOf(this.pair1.address)).to.lt(HIGH_POS);
     })
+
+    it("should not be reverted because unable to cover flashloan fee", async function () {
+        await expect(this.ape.connect(deployer).ape(
+            this.pair1.address,
+            this.pair0.address,
+            this.router1.address,
+            this.router0.address,
+            this.token0.address,
+            this.token1.address,
+            "0"
+        )).to.be.revertedWith("UniswapV2: INSUFFICIENT_OUTPUT_AMOUNT'");
+        expect(await this.token0.balanceOf(unknown.address)).to.be.eq('0');
+        expect(await this.token1.balanceOf(unknown.address)).to.be.eq('0');
+
+        expect(await this.token0.balanceOf(this.pair0.address)).to.eq(HIGH_POS);
+        expect(await this.token1.balanceOf(this.pair0.address)).to.eq(LOW_POS);
+        expect(await this.token0.balanceOf(this.pair1.address)).to.eq(LOW_POS);
+        expect(await this.token1.balanceOf(this.pair1.address)).to.eq(HIGH_POS);
+    })
+
+    it("should not be reverted because trade size too large", async function () {
+        await expect(this.ape.connect(deployer).ape(
+            this.pair1.address,
+            this.pair0.address,
+            this.router1.address,
+            this.router0.address,
+            this.token0.address,
+            this.token1.address,
+            ethers.utils.parseEther("2000")
+        )).to.be.revertedWith("UniswapV2: INSUFFICIENT_LIQUIDITY'");
+        expect(await this.token0.balanceOf(unknown.address)).to.be.eq('0');
+        expect(await this.token1.balanceOf(unknown.address)).to.be.eq('0');
+
+        expect(await this.token0.balanceOf(this.pair0.address)).to.eq(HIGH_POS);
+        expect(await this.token1.balanceOf(this.pair0.address)).to.eq(LOW_POS);
+        expect(await this.token0.balanceOf(this.pair1.address)).to.eq(LOW_POS);
+        expect(await this.token1.balanceOf(this.pair1.address)).to.eq(HIGH_POS);
+    })
+
+    it("should only allow owner to call", async function () {
+
+        await expect(
+            this.ape.connect(unknown).ape(
+                this.pair0.address,
+                this.pair1.address,
+                this.router0.address,
+                this.router1.address,
+                this.token0.address,
+                this.token1.address,
+                ethers.utils.parseEther("1")
+            )).to.be.revertedWith("Ownable: caller is not the owner");
+        expect(await this.token0.balanceOf(unknown.address)).to.be.eq('0');
+        expect(await this.token1.balanceOf(unknown.address)).to.be.eq('0');
+
+        expect(await this.token0.balanceOf(this.pair0.address)).to.eq(HIGH_POS);
+        expect(await this.token1.balanceOf(this.pair0.address)).to.eq(LOW_POS);
+        expect(await this.token0.balanceOf(this.pair1.address)).to.eq(LOW_POS);
+        expect(await this.token1.balanceOf(this.pair1.address)).to.eq(HIGH_POS);
+    })
+
+    it("uniswapV2Call should not be allowed to call", async function () {
+
+        await expect(
+            this.ape.connect(deployer).uniswapV2Call(
+                deployer.address,
+                0, 0, ethers.utils.hexlify(1)
+            )).to.be.reverted;
+        expect(await this.token0.balanceOf(unknown.address)).to.be.eq('0');
+        expect(await this.token1.balanceOf(unknown.address)).to.be.eq('0');
+
+        expect(await this.token0.balanceOf(this.pair0.address)).to.eq(HIGH_POS);
+        expect(await this.token1.balanceOf(this.pair0.address)).to.eq(LOW_POS);
+        expect(await this.token0.balanceOf(this.pair1.address)).to.eq(LOW_POS);
+        expect(await this.token1.balanceOf(this.pair1.address)).to.eq(HIGH_POS);
+    })
+
+    it("should be dummy", async function () { })
 })
